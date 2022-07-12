@@ -70,8 +70,8 @@ template < class Visitor, class Graph > struct MASVisitorConcept
 template < class Visitors = null_visitor > class mas_visitor
 {
 public:
-    mas_visitor() {}
-    mas_visitor(Visitors vis) : m_vis(vis) {}
+    mas_visitor() { }
+    mas_visitor(Visitors vis) : m_vis(vis) { }
 
     template < class Vertex, class Graph >
     void initialize_vertex(Vertex u, Graph& g)
@@ -124,8 +124,6 @@ namespace detail
         typedef typename boost::property_traits< WeightMap >::value_type
             weight_type;
 
-        std::set< vertex_descriptor > assignedVertices;
-
         // initialize `assignments` (all vertices are initially
         // assigned to themselves)
         BGL_FORALL_VERTICES_T(v, g, Graph) { put(assignments, v, v); }
@@ -149,15 +147,11 @@ namespace detail
         put(keys, start, get(keys, start) + num_vertices(g) + 1);
         pq.update(start);
 
-        // start traversing the graph
-        // vertex_descriptor s, t;
-        // weight_type w;
         while (!pq.empty())
         { // while PQ \neq {} do
             const vertex_descriptor u = pq.top(); // u = extractmax(PQ)
-            /* weight_type w = */ get(keys, u);
             vis.start_vertex(u, g);
-            pq.pop(); //            vis.start_vertex(u, g);
+            pq.pop();
 
             BGL_FORALL_OUTEDGES_T(u, e, g, Graph)
             { // foreach (u, v) \in E do
@@ -175,34 +169,6 @@ namespace detail
                 }
             }
 
-            typename std::set< vertex_descriptor >::const_iterator
-                assignedVertexIt,
-                assignedVertexEnd = assignedVertices.end();
-            for (assignedVertexIt = assignedVertices.begin();
-                 assignedVertexIt != assignedVertexEnd; ++assignedVertexIt)
-            {
-                const vertex_descriptor uPrime = *assignedVertexIt;
-
-                if (get(assignments, uPrime) == u)
-                {
-                    BGL_FORALL_OUTEDGES_T(uPrime, e, g, Graph)
-                    { // foreach (u, v) \in E do
-                        vis.examine_edge(e, g);
-
-                        const vertex_descriptor v
-                            = get(assignments, target(e, g));
-
-                        if (pq.contains(v))
-                        { // if v \in PQ then
-                            put(keys, v,
-                                get(keys, v)
-                                    + get(weights, e)); // increasekey(PQ, v,
-                                                        // wA(v) + w(u, v))
-                            pq.update(v);
-                        }
-                    }
-                }
-            }
             vis.finish_vertex(u, g);
         }
     }
