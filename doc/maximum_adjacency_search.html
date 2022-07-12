@@ -66,16 +66,17 @@ MAS(<i>G</i>)
   <b>end for</b>
   // for the starting vertex s
   <i>reach_count[s] := 1</i>
-  <b>for</b> each unvisited vertex <i>u in V</i>
+  <b>while</b> there are unvisited vertices
+    pick an unvisited vertex <i>u in V</i> with maximum <i>reach_count</i>
     <b>call</b> MAS-VISIT(<i>G</i>, <i>u</i>)
-    remove u from the list on unvisited vertices
+    mark <i>u</i> as visited
     <b>for</b> each out edge from <i>u</i> to <i>t</i>
        <b>if</b> <i>t</i> has not yet been visited
-         <i>reach_count[t] += w[u, t]</i> (default weight is 1)
+         increase <i>reach_count[t]</i> by <i>w[u, t]</i> (default weight is 1)
        <b>end if</b>
     <b>end for</b> each out edge
     <b>call</b> MAS-VISIT(<i>G</i>, <i>u</i>)
-  <b>end for</b> each unvisited vertex
+  <b>end while</b>
 <pre>
 </td>
 <td valign="top">
@@ -87,7 +88,7 @@ initialize vertex <i>u</i>
 -
 -
 -
-examine vertex <i>u</i>
+start vertex <i>u</i>
 -
 examine edge <i>(u,t)</i>
 -
@@ -110,7 +111,7 @@ finish vertex <i>u</i>
 
 IN: <tt>const UndirectedGraph&amp; g</tt></p>
 <blockquote>
-  A connected, directed graph. The graph type must
+  A connected, undirected graph. The graph type must
   be a model of <a href="./IncidenceGraph.html">Incidence Graph</a>
   and <a href="./VertexListGraph.html">Vertex List Graph</a>.<br>
 </blockquote>
