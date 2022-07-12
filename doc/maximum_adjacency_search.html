@@ -71,7 +71,7 @@ MAS(<i>G</i>)
     remove u from the list on unvisited vertices
     <b>for</b> each out edge from <i>u</i> to <i>t</i>
        <b>if</b> <i>t</i> has not yet been visited
-         increment <i>reach_count[t]</i>
+         <i>reach_count[t] += w[u, t]</i> (default weight is 1)
        <b>end if</b>
     <b>end for</b> each out edge
     <b>call</b> MAS-VISIT(<i>G</i>, <i>u</i>)
@@ -126,7 +126,7 @@ IN: <tt>const UndirectedGraph&amp; g</tt></p>
   href="http://www.boost.org/sgi/stl/LessThanComparable.html">
   Less Than Comparable</a> and summable. The key type of this map
   needs to be the graph's edge descriptor type.
-  <b>Default:</b> <tt>get(edge_weight, g)</tt><br>
+  <b>Default:</b> <tt>boost::make_static_property_map&lttypename boost::graph_traits&ltUndirectedGraph&gt::edge_descriptor&gt(1)</tt><br>
 </blockquote>
 
 IN: <tt>visitor(MASVisitor vis)</tt></p>

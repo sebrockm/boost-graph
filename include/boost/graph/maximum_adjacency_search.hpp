@@ -278,11 +278,18 @@ namespace graph
                 using namespace boost::graph::keywords;
                 typedef typename boost::graph_traits< Graph >::vertex_descriptor
                     vertex_descriptor;
+                typedef typename boost::graph_traits< Graph >::edge_descriptor
+                    edge_descriptor;
 
-                // get edge_weight_t as the weight type
-                typedef typename boost::property_map< Graph, edge_weight_t >
-                    WeightMap;
-                typedef typename WeightMap::value_type weight_type;
+                typedef int weight_type;
+
+                typedef boost::static_property_map< weight_type,
+                    edge_descriptor >
+                    default_weights_map_type;
+
+                default_weights_map_type default_weight_map
+                    = boost::make_static_property_map< edge_descriptor >(
+                        weight_type(1)); // every edge has weight 1 per default
 
                 typedef boost::detail::make_priority_queue_from_arg_pack_gen<
                     boost::graph::keywords::tag::max_priority_queue,
@@ -310,7 +317,7 @@ namespace graph
                     boost::graph::keywords::tag::vertex_assignment_map,
                     vertex_descriptor >::map_type default_map
                     = map_gen(g, params);
-                boost::maximum_adjacency_search(g, get(edge_weight, g),
+                boost::maximum_adjacency_search(g, default_weight_map,
                     params[_visitor | default_visitor],
                     params[_root_vertex | *vertices(g).first],
                     params[_vertex_assignment_map | default_map], pq);
