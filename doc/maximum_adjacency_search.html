@@ -168,10 +168,10 @@ graph_traits&lt;VertexListGraph&gt;::vertex_descriptor start)</tt></p>
 <p>UTIL: <tt>vertex_assignment_map(AssignmentMap assignments)</tt></p>
 <blockquote>
   <tt>AssignmentMap</tt> must be a model of <a
-  href="../../property_map/doc/ReadWritePropertyMap.html">Read/Write Property
+  href="../../property_map/doc/ReadablePropertyMap.html">Readable Property
   Map</a>. The key and value types must be the graph's vertex descriptor
   type.<br>
-  <b>Default:</b> A <tt>boost::iterator_property_map</tt> using a
+  <b>Default:</b> A <tt>boost::identity_property_map</tt> using a
   <tt>std::vector</tt> of <tt>num_vertices(g)</tt> vertex descriptors and
   <tt>vertexIndices</tt> for the index map.
 </blockquote>
