@@ -141,7 +141,7 @@ IN: <tt>visitor(MASVisitor vis)</tt></p>
 IN: <tt>root_vertex(typename
 graph_traits&lt;VertexListGraph&gt;::vertex_descriptor start)</tt></p>
 <blockquote>
-  This specifies the vertex that the depth-first search should
+  This specifies the vertex that the maximum adjacency search should
   originate from. The type is the type of a vertex descriptor for the
   given graph.<br>
   <b>Default:</b> <tt>*vertices(g).first</tt><br>
@@ -171,9 +171,7 @@ graph_traits&lt;VertexListGraph&gt;::vertex_descriptor start)</tt></p>
   href="../../property_map/doc/ReadablePropertyMap.html">Readable Property
   Map</a>. The key and value types must be the graph's vertex descriptor
   type.<br>
-  <b>Default:</b> A <tt>boost::identity_property_map</tt> using a
-  <tt>std::vector</tt> of <tt>num_vertices(g)</tt> vertex descriptors and
-  <tt>vertexIndices</tt> for the index map.
+  <b>Default:</b> A <tt>boost::identity_property_map</tt>.
 </blockquote>
 
 <p>UTIL: <tt>max_priority_queue(MaxPriorityQueue&amp; pq)</tt></p>
